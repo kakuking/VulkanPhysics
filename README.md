@@ -4,7 +4,7 @@ Plan to implement the Barnes-Hut for force accumulation, and then an AABB tree o
 Using GLFW, Vulkan, FMT, IMGUI
 
 - [x] Brute-force force accumulation (O($$n^{2}$$))
-- [ ] Barnes Hut accumulation ()(nlogn)
+- [ ] Barnes Hut accumulation O($$nlog(n)$$)
 - [ ] Brute-force collision detection
 - [ ] Optimized collision detection
 - [ ] 😎
