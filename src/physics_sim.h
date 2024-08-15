@@ -242,6 +242,7 @@ private:
         // Center, radius, mass, color
         world.addCircle(glm::vec3(-1.0, -1.0, 0.0), 0.2f, 1.f, glm::vec4(0.0, 1.0, 0.0, 1.0));
         world.addCircle(glm::vec3(1.0, 1.0, 0.0), 0.282f, 2.f, glm::vec4(1.0, 0.0, 0.0, 1.0));
+        world.addCircle(glm::vec3(2.0, 0.0, 0.0), 0.346f, 3.f, glm::vec4(0.0, 0.0, 1.0, 1.0));
 
         vertices = world.getVertices();
         indices = world.getIndices();

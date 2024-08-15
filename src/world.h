@@ -85,6 +85,32 @@ struct Circle: public Particle {
     }
 };
 
+// 2D
+struct BarnesHutNode{
+    std::vector<Particle*> particles;
+    glm::vec3 bottomLeftLimit, topRightLimit, center;
+
+
+    BarnesHutNode* bottomLeft;
+    BarnesHutNode* bottomRight;
+    BarnesHutNode* topLeft;
+    BarnesHutNode* topRight;
+
+    void addParticle(Particle* newParticle){
+        // first particle
+        if(particles.size() < 1){
+            particles.push_back(newParticle);
+
+            bottomLeftLimit = {-1000.f, -1000.f, 0.f};
+            topRightLimit = {1000.f, 1000.f, 0.f};
+
+
+        }
+
+
+    }
+};
+
 class World{
     std::vector<Particle> particles;
     
@@ -93,9 +119,8 @@ class World{
 
     int level = 1;    
 
-
 public:
-    float G = 6.67e-4; // 10^7 times stronger than actually
+    float G = 6.67e-2; // 10^7 times stronger than actually
 
     std::vector<Vertex> getVertices(){
         int currentOffset = 0;
