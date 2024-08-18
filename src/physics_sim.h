@@ -6,6 +6,9 @@
 #include "structs.h"
 #include "pipelineBuilder.h"
 
+#include <cstdlib> // for rand()
+#include <ctime> // for time()
+
 #include "world.h"
 
 struct RectangleUniform {
@@ -234,21 +237,52 @@ private:
     }
 
     void setupData(){
-        maxVertexCount = 100;
-        maxIndexCount = 1000;
+        maxVertexCount = 800;
+        maxIndexCount = 4000;
 
         world.setLevel(5);
 
         // Center, radius, mass, color
-        world.addCircle(glm::vec3(-1.0, -1.0, 0.0), 0.2f, 1.f, glm::vec4(0.0, 1.0, 0.0, 1.0));
-        world.addCircle(glm::vec3(1.0, 1.0, 0.0), 0.282f, 2.f, glm::vec4(1.0, 0.0, 0.0, 1.0));
-        world.addCircle(glm::vec3(2.0, 0.0, 0.0), 0.346f, 3.f, glm::vec4(0.0, 0.0, 1.0, 1.0));
-        world.addCircle(glm::vec3(-2.0, 1.0, 0.0), 0.4f, 4.f, glm::vec4(1.0, 0.0, 1.0, 1.0));
+        // world.addCircle(glm::vec3(-1.0, -1.0, 0.0), 0.2f, 1.f, glm::vec4(0.0, 1.0, 0.0, 1.0));
+        // world.addCircle(glm::vec3(1.0, 1.0, 0.0), 0.282f, 2.f, glm::vec4(1.0, 0.0, 0.0, 1.0));
+        // world.addCircle(glm::vec3(2.0, 0.0, 0.0), 0.346f, 3.f, glm::vec4(0.0, 0.0, 1.0, 1.0));
+        // world.addCircle(glm::vec3(-2.0, 1.0, 0.0), 0.4f, 4.f, glm::vec4(1.0, 0.0, 1.0, 1.0));
+
+        glm::vec3 bottom_l = {-1.f, -1.f, 0.f};
+        glm::vec3 top_r = {1.f, 1.f, 0.f};
+
+        int num_rows = 5, num_cols = 5;
+        float delta_rows = 1.f/num_rows;
+
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+        for (float i = 0; i < num_rows; i++)
+        {   
+            float y = interpolate(bottom_l.y, top_r.y, i/num_rows);
+            for (float j = 0; j < num_cols; j++)
+            {
+                float x = interpolate(bottom_l.x, top_r.x, j/num_cols);
+                world.addCircle(glm::vec3(x, y, 0.0), 0.2f, 2.f, randomVec4());
+            }
+            
+        }
+        
 
         vertices = world.getVertices();
         indices = world.getIndices();
 
         indexCount = indices.size();
+    }
+
+    float interpolate(float a, float b, float t){
+        return a*(1-t) + b*t;
+    }
+
+    float randomFloat() {
+        return static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
+    }
+
+    glm::vec4 randomVec4() {
+        return glm::vec4(randomFloat(), randomFloat(), randomFloat(), 1.0f);
     }
 
     void updateWorld(){

@@ -9,8 +9,8 @@ struct Particle {
     float mass;
     glm::vec3 velocity;
 
-    glm::vec3 accumulatedForce;
-    glm::vec3 accumulatedAcceleration;
+    glm::vec3 accumulatedForce = {0.f, 0.f, 0.f};
+    glm::vec3 accumulatedAcceleration = {0.f, 0.f, 0.f};
 
     std::vector<glm::vec3> vertices;
     std::vector<uint32_t> indices;
@@ -90,7 +90,6 @@ struct BarnesHutNode{
     std::vector<Particle*> particles;
     glm::vec3 bottomLeftLimit, topRightLimit, center;
 
-
     BarnesHutNode* bottomLeft;
     BarnesHutNode* bottomRight;
     BarnesHutNode* topLeft;
@@ -104,10 +103,7 @@ struct BarnesHutNode{
             bottomLeftLimit = {-1000.f, -1000.f, 0.f};
             topRightLimit = {1000.f, 1000.f, 0.f};
 
-
         }
-
-
     }
 };
 
